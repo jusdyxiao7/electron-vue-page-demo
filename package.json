@@ -1,0 +1,63 @@
+{
+  "name": "rescue-desktop-app",
+  "version": "1.0.1",
+  "private": true,
+  "description": "航空搜救任务训练模拟系统-态势显控系统",
+  "author": "北京蓝天航空科技股份有限公司",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:start": "electron .",
+    "electron:generate-icons": "electron-icon-builder --input=./public/logo.png --output=build --flatten",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "electron-packager:build": "electron-packager ./dist --platform=win32 --arch=x64 --icon=./build/icons/icon.ico --overwrite",
+    "electron-packager:buildAllPlatform": "electron-packager ./dist --all --arch=x64 --icon=./public/favicon.ico --out=./dist_electron-packager --overwrite",
+    "electron-packager:dev": "npm run build && electron build/electron.js",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "bootstrap": "^4.6.2",
+    "core-js": "^3.8.3",
+    "element-ui": "^2.13.2",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "electron": "^29.1.6",
+    "electron-devtools-installer": "^3.1.0",
+    "electron-icon-builder": "^2.0.1",
+    "electron-packager": "^17.1.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
