@@ -20,24 +20,48 @@ npm 版本 7.0.2
 npm run electron:generate-icons
 ```
 
+## npm 全局安装electron及打包相关命令
+
+```
+npm install -g electron
+npm install -g electron-builder
+npm install -g electron-packager
+```
+
 打包相关配置详见 vue.config.js
 
 ## Project setup
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compiles and hot-reloads for web development
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compiles and hot-reloads for electron development 
+
+```
+npm run electron:serve
+```
+
+### Compiles and minifies for web production
+
 ```
 npm run build
 ```
 
+### Compiles and minifies for electron production
+
+```
+npm run electron:build
+```
+
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
