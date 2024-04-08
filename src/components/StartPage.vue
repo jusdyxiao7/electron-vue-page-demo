@@ -29,7 +29,7 @@
           </div>
         </el-col>
         <el-col :span="spanRowRight">
-          <div class="sub-item card-item-container" @click="toAdminLogin">
+          <div class="sub-item card-item-container" @click="toStudentOtherLogin">
           <el-card :body-style="{ padding: '0px' }">
             <img :src="firstRowList[1]" class="image">
             <div style="padding: 14px;">
@@ -118,6 +118,7 @@ export default {
   data() {
     return {
       toStudentLoginUrl: 'https://www.baidu.com',
+      toStudentOtherLoginUrl: 'https://www.zhihu.com',
       toTeacherLoginUrl: 'https://www.jd.com',
       toAdminLoginUrl: 'https://www.taobao.com',
 
@@ -158,6 +159,11 @@ export default {
     toStudentLogin() {
       // const exePath = getExePath();
       ipcRenderer.send('toStudentLogin', this.toStudentLoginUrl)
+      // console.log(exePath)
+    },
+    toStudentOtherLogin() {
+      // const exePath = getExePath();
+      ipcRenderer.send('toStudentOtherLogin', this.toStudentOtherLoginUrl)
       // console.log(exePath)
     },
     toTeacherLogin() {

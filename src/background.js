@@ -427,20 +427,28 @@ function addIpc() {
   /**
    * 首页控制台新增控制方法
    */
+  // 搜救任务协调
   ipcMain.on('toStudentLogin', (event, url) => {
     const studentLogin = getConfigValueByKey('toStudentLogin')
     if (win) {
       win.loadURL(studentLogin);
     }
   })
-
+  // 搜救任务指挥
+  ipcMain.on('toStudentOtherLogin', (event, url) => {
+    const studentOtherLogin = getConfigValueByKey('toStudentLoginOther')
+    if (win) {
+      win.loadURL(studentOtherLogin);
+    }
+  })
+  // 导调监控
   ipcMain.on('toTeacherLogin', (event, url) => {
     const teacherLogin = getConfigValueByKey('toTeacherLogin')
     if (win) {
       win.loadURL(teacherLogin);
     }
   })
-
+  
   ipcMain.on('toAdminLogin', (event, url) => {
     const adminLogin = getConfigValueByKey('toAdminLogin')
     if (win) {
