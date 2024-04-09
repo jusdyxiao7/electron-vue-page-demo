@@ -3,21 +3,24 @@
 <!--    <img alt="Vue logo" src="./assets/logo.png">-->
 <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <!-- <StartPage/> -->
-    <head-page />
+    <!-- <head-page /> -->
+    <custom-page />
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
 // import StartPage from './components/StartPage'
-import HeadPage from './components/HeadPage'
+// import HeadPage from './components/HeadPage'
+import CustomPage from './components/CustomPage'
 
 export default {
   name: 'App',
   components: {
     // HelloWorld,
     // StartPage
-    HeadPage
+    // HeadPage,
+    CustomPage
   }
 }
 </script>
