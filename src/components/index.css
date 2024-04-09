@@ -1,0 +1,95 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-image: url('../assets/background.png');
+    background-size: 100% 100%;
+}
+
+/* 标题 */
+.top-header-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 113px;
+    background: url('../assets/top.png') 100% no-repeat;
+    background-size: 100% 100%;
+}
+
+/* 标题文字 */
+.top-header-text {
+    margin-top: 20px;
+    text-shadow: 0px 0px 12px rgba(35, 24, 21, 0.84);
+    overflow-wrap: break-word;
+    color: rgba(255, 255, 255, 1);
+    font-size: 24px;
+    font-family: PangMenZhengDao-3;
+    font-weight: normal;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 64px;
+}
+
+/* 下方主页面 */
+.base-item-container {
+    width: 100%;
+    height: calc(100vh - 162px);
+}
+
+/* 学员教员通用 */
+.tool-tip-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 80px 80px 0 80px;
+}
+
+.tool-tip-image-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.tool-button-container-wrapper {
+    margin: 30px 70px 0 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.tool-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 80px 0 80px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    width: 33%;
+    height: 450px;
+}
+
+.tool-button-image-wrapper {
+    margin: 20px 0px;
+    width: 100%;
+    height: 450px;
+    position: relative;
+}
+
+.image {
+    position: absolute;
+    cursor: pointer;
+    height: 203px;
+    width: 100%;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    height: 49px;
+    background: url('../assets/bottom.png') 100% no-repeat;
+    background-size: 100% 100%;
+}

@@ -7,6 +7,8 @@ module.exports = defineConfig({
   pluginOptions: {
     // electronBuilder配置
     electronBuilder: {
+      // 修正打包后 静态图片 相对路径引入错误
+      customFileProtocol: './',
       builderOptions: {
         // productName: "态势显控教员端",//生成exe的名字(允许为汉字)
         // productName: "态势显控学员端",//生成exe的名字(允许为汉字)

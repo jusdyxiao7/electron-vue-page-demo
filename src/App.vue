@@ -2,19 +2,22 @@
   <div id="app">
 <!--    <img alt="Vue logo" src="./assets/logo.png">-->
 <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-    <StartPage/>
+    <!-- <StartPage/> -->
+    <head-page />
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import StartPage from './components/StartPage'
+// import StartPage from './components/StartPage'
+import HeadPage from './components/HeadPage'
 
 export default {
   name: 'App',
   components: {
     // HelloWorld,
-    StartPage
+    // StartPage
+    HeadPage
   }
 }
 </script>
