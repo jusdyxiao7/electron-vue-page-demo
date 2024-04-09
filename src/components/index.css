@@ -24,7 +24,8 @@
     overflow-wrap: break-word;
     color: rgba(255, 255, 255, 1);
     font-size: 24px;
-    font-family: PangMenZhengDao-3;
+    /*font-family: PangMenZhengDao-3;*/
+    font-family: 'PangMenZhengDao-3';
     font-weight: normal;
     text-align: center;
     white-space: nowrap;
