@@ -9,7 +9,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "electron:start": "electron .",
-    "electron:generate-icons": "electron-icon-builder --input=./public/logo.png --output=build --flatten",
+    "electron:generate-icons": "electron-icon-builder --input=./public/helicopter.png --output=build --flatten",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "electron-packager:build": "electron-packager ./dist --platform=win32 --arch=x64 --icon=./build/icons/icon.ico --overwrite",

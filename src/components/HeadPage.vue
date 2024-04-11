@@ -64,13 +64,13 @@
         </div>
 
         <div class="tool-button-wrapper">
-          <div class="tool-button-image-wrapper" @click="openChromeWebSite">
+          <div class="tool-button-image-wrapper" @click="openLocalAppAudio">
             <img
                 class="image"
                 referrerpolicy="no-referrer"
                 :src="openAppAudioImageSrc"
-                @mouseover="changeImageActive('openChromeWebSite')"
-                @mouseleave="changeImageInactive('openChromeWebSite')"
+                @mouseover="changeImageActive('openLocalAppAudio')"
+                @mouseleave="changeImageInactive('openLocalAppAudio')"
             />
           </div>
           <div class="tool-button-image-wrapper" @click="openLocalApp">
@@ -145,11 +145,17 @@ export default {
         // 导调监控
         this.teacherMonitorImageSrc = this.teacherMonitorImageActiveSrc
       } else if (key === 'openChromeWebSite') {
-        // 语音识别
-        this.openAppAudioImageSrc = this.openAppAudioImageActiveSrc
+        // FIXME 预留打开网页
+        // this.openAppAudioImageSrc = this.openAppAudioImageActiveSrc
       } else if (key === 'openLocalApp') {
         // 内部通信
         this.openAppInternalCommunicationImageSrc = this.openAppInternalCommunicationImageActiveSrc
+      }  else if (key === 'openLocalAppAudio') {
+        // 语音识别
+        this.openAppAudioImageSrc = this.openAppAudioImageActiveSrc
+      }  else if (key === 'openLocalAppOther') {
+        // FIXME 预留其他App
+        // this.openAppInternalCommunicationImageSrc = this.openAppInternalCommunicationImageInactiveSrc
       } else {
         // TODO 其余待扩展
 
@@ -168,45 +174,49 @@ export default {
         // 导调监控
         this.teacherMonitorImageSrc = this.teacherMonitorImageInactiveSrc
       } else if (key === 'openChromeWebSite') {
-        // 语音识别
-        this.openAppAudioImageSrc = this.openAppAudioImageInactiveSrc
+        // FIXME 预留打开网页
+        // this.openAppAudioImageSrc = this.openAppAudioImageInactiveSrc
       } else if (key === 'openLocalApp') {
         // 内部通信
         this.openAppInternalCommunicationImageSrc = this.openAppInternalCommunicationImageInactiveSrc
+      }  else if (key === 'openLocalAppAudio') {
+        // 语音识别
+        this.openAppAudioImageSrc = this.openAppAudioImageInactiveSrc
+      }  else if (key === 'openLocalAppOther') {
+        // 预留其他本地app
+        // this.openAppInternalCommunicationImageSrc = this.openAppInternalCommunicationImageInactiveSrc
       } else {
         // TODO 其余待扩展
 
       }
     },
     toStudentLogin() {
-      // const exePath = getExePath();
       ipcRenderer.send('toStudentLogin', this.toStudentLoginUrl)
-      // console.log(exePath)
     },
     toStudentOtherLogin() {
-      // const exePath = getExePath();
       ipcRenderer.send('toStudentOtherLogin', this.toStudentOtherLoginUrl)
-      // console.log(exePath)
     },
     toTeacherLogin() {
       ipcRenderer.send('toTeacherLogin', this.toTeacherLoginUrl)
-      // const system = getSystem();
-      // console.log(system)
     },
     toAdminLogin() {
       ipcRenderer.send('toAdminLogin', this.toAdminLoginUrl)
-      // const abc = readConfig();
-      // console.log(abc)
     },
+    // 预留打开网页
     openChromeWebSite() {
       ipcRenderer.send('openChromeWebSite', 'openChromeWebSite')
-      // const abc = readConfig();
-      // console.log(abc)
     },
+    // 内部通信
     openLocalApp() {
       ipcRenderer.send('openLocalApp', 'openLocalApp')
-      // const abc = readConfig();
-      // console.log(abc)
+    },
+    // 语音识别
+    openLocalAppAudio() {
+      ipcRenderer.send('openLocalAppAudio', 'openLocalAppAudio')
+    },
+    // 预留其他app
+    openLocalAppOther() {
+      ipcRenderer.send('openLocalAppOther', 'openLocalAppOther')
     }
   }
 }

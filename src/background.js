@@ -448,7 +448,7 @@ function addIpc() {
       win.loadURL(teacherLogin);
     }
   })
-  
+
   ipcMain.on('toAdminLogin', (event, url) => {
     const adminLogin = getConfigValueByKey('toAdminLogin')
     if (win) {
@@ -456,6 +456,7 @@ function addIpc() {
     }
   })
 
+  // 预留打开网页
   ipcMain.on('openChromeWebSite', (event, url) => {
     const chromeWebSite = getConfigValueByKey('openChromeWebSite')
     if (win) {
@@ -463,11 +464,30 @@ function addIpc() {
     }
   })
 
+  // 内部通信
   ipcMain.on('openLocalApp', (event, url) => {
     const localApp = getConfigValueByKey('openLocalApp')
     // loadConfig()
     if (win) {
       callLocalProgram(localApp)
+    }
+  })
+
+  // 语音识别
+  ipcMain.on('openLocalAppAudio', (event, url) => {
+    const localAppAudio = getConfigValueByKey('openLocalAppAudio')
+    // loadConfig()
+    if (win) {
+      callLocalProgram(localAppAudio)
+    }
+  })
+
+  // 预留其他App
+  ipcMain.on('openLocalAppOther', (event, url) => {
+    const localAppOther = getConfigValueByKey('openLocalAppOther')
+    // loadConfig()
+    if (win) {
+      callLocalProgram(localAppOther)
     }
   })
 }

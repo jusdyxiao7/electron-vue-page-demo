@@ -4,5 +4,7 @@
   "toTeacherLogin": "http://117.132.0.103:17743/#/loginTeacher",
   "toAdminLogin": "http://117.132.0.103:17743/#/",
   "openChromeWebSite": "https://www.baidu.com",
-  "openLocalApp": "notepad.exe"
+  "openLocalApp": "notepad.exe",
+  "openLocalAppAudio": "E:\\Tencent\\WeChat\\WeChat.exe",
+  "openLocalAppOther": "C:\\Program Files\\DAUM\\PotPlayer\\PotPlayerMini64.exe"
 }
