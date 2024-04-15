@@ -4,7 +4,8 @@
 <!--    <HelloWorld msg="Welcome to Your Vue.js App"/>-->
     <!-- <StartPage/> -->
 <!--     <head-page />-->
-    <custom-page />
+<!--    <custom-page />-->
+    <new-page />
   </div>
 </template>
 
@@ -12,7 +13,8 @@
 // import HelloWorld from './components/HelloWorld.vue'
 // import StartPage from './components/StartPage'
 // import HeadPage from './components/HeadPage'
-import CustomPage from './components/CustomPage'
+// import CustomPage from './components/CustomPage'
+import NewPage from './components/NewPage.vue'
 
 export default {
   name: 'App',
@@ -20,7 +22,8 @@ export default {
     // HelloWorld,
     // StartPage
     // HeadPage,
-    CustomPage
+    // CustomPage
+    NewPage
   }
 }
 </script>
