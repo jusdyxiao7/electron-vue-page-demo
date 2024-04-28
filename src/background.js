@@ -16,6 +16,74 @@ const path = require('path')
 const fs = require('fs')
 const { exec, child_process } = require('child_process')
 
+const httpProxy = require('http-proxy');
+const proxy = httpProxy.createProxyServer();
+
+// const { createServer } = require('http')
+
+/**
+ * express静态文件配置 ====== begin ======
+ */
+const express = require('express');
+const expressApp = express();
+
+// process.getSystemVersion()
+// process.getSystemMemoryInfo()
+// process.resourcesPath
+// process.parentPort
+
+
+
+// Step 1. 静态文件服务，用于托管前端项目的静态资源
+if (isDevelopment) {
+// 指定静态文件目录为 public 文件夹
+  expressApp.use(express.static(path.join(__dirname, '../public')));
+  expressApp.use('/web', express.static(path.join(__dirname, '../web'))); //web端
+  expressApp.use('/manage', express.static(path.join(__dirname, '../manage'))); //后台管理端
+  expressApp.use('/images', express.static(path.join(__dirname, '../manage/images'))); //后台管理端打包后静态文件目录一
+  expressApp.use('/img', express.static(path.join(__dirname, '../manage/img'))); //后台管理端打包后静态文件目录二
+} else {
+  // 将静态文件放置在打包后 跟 exe 同级的目录中
+  expressApp.use(express.static(path.join(process.resourcesPath, '../public')));
+  expressApp.use('/web', express.static(path.join(process.resourcesPath, '../web'))); //web端
+  expressApp.use('/manage', express.static(path.join(process.resourcesPath, '../manage'))); //后台管理端
+  expressApp.use('/images', express.static(path.join(process.resourcesPath, '../manage/images'))); //后台管理端打包后静态文件目录二
+  expressApp.use('/img', express.static(path.join(process.resourcesPath, '../manage/img'))); //后台管理端打包后静态文件目录二
+}
+// 如果有更多的前端项目，可以继续添加静态文件服务
+
+
+// Step 2. 其他路由和中间件配置...
+
+// 路由规则，根据不同的路径返回不同的前端项目
+expressApp.get('/web/*', (req, res) => {
+  if (isDevelopment) {
+    res.sendFile(path.join(__dirname, 'web', 'index.html'));
+  } else {
+    res.sendFile(path.join(process.resourcesPath, 'web', 'index.html'));
+  }
+});
+
+expressApp.get('/manage/*', (req, res) => {
+  if (isDevelopment) {
+    res.sendFile(path.join(__dirname, 'manage', 'index.html'));
+  } else {
+    res.sendFile(path.join(process.resourcesPath, 'manage', 'index.html'));
+  }
+});
+
+// 如果有更多的前端项目，可以继续添加路由规则
+
+// 启动 Express 服务器
+const port = 3001;
+expressApp.listen(port, () => {
+  console.log(`后台服务正在运行，端口号为 ${port}`);
+});
+/**
+ * express静态文件配置 ====== end ======
+ */
+
+
 // 设置运行内存350MB
 process.env.NODE_OPTIONS = '--no-warnings --max-old-space-size=350'
 // app.commandLine.appendSwitch('disable-site-isolation-trials');  // //这行一定是要加的，要不然无法使用iframe.contentDocument方法
@@ -542,3 +610,14 @@ if (isDevelopment) {
     })
   }
 }
+
+
+// 适配 http 的启动server，暂时注释
+// 创建HTTP服务器并监听端口
+// const server = createServer((req, res) => {
+//   // res.end('Hello from Electron');
+// });
+//
+// server.listen(8080, () => {
+//   console.log('Server listening on port 8080');
+// });
