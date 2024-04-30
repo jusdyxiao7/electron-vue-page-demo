@@ -7,6 +7,7 @@ module.exports = defineConfig({
   pluginOptions: {
     // electronBuilder配置
     electronBuilder: {
+      preload: 'src/preload.js',
       // 修正打包后 静态图片 相对路径引入错误
       customFileProtocol: './',
       builderOptions: {

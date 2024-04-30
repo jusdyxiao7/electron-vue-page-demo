@@ -1,4 +1,5 @@
 {
+  "isNewWindowCreated": true,
   "toStudentLogin": "http://117.132.0.103:17743/#/loginStudent",
   "toStudentLoginOther": "http://117.132.0.103:17743/#/loginStudentOther",
   "toTeacherLogin": "http://117.132.0.103:17743/#/loginTeacher",

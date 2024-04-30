@@ -18,6 +18,7 @@ const { exec, child_process } = require('child_process')
 
 const httpProxy = require('http-proxy');
 const proxy = httpProxy.createProxyServer();
+const AppWindow = require('./AppWindow')
 
 // const { createServer } = require('http')
 
@@ -282,6 +283,19 @@ export function readConfig() {
 
 //程序主窗口
 let win = null;
+// 搜救任务协调
+let toStudentLoginWindow = null;
+// 搜救任务指挥
+let toStudentOtherLoginWindow = null;
+// 导调监控
+let toTeacherLoginWindow = null;
+
+// 预留
+let toAdminLoginWindow = null;
+let openChromeWebSiteWindow = null;
+
+// 是否创建新窗口
+const isNewWindowCreated = true;
 
 async function createWindow() {
   let {
@@ -312,7 +326,13 @@ async function createWindow() {
       nodeIntegration: true,  // 允许html页面上的javascipt代码访问nodejs 环境api代码的能力
       enableRemoteModule: true, // 是否允许使用remote
       contextIsolation: false, // 加载本地图片
-      webviewTag: true // 允许webview
+      webviewTag: true, // 允许webview
+      // 支持多线程
+      nodeIntegrationInWorker: true,
+      nodeIntegrationInSubFrames: true, //放开权限
+      // plugins: true,
+      // allowDisplayingInsecureContent: true
+      preload: path.join(__dirname, 'preload.js')
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       // nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
@@ -364,6 +384,37 @@ async function createWindow() {
   win.show()
 
   // createProtocol('app')
+
+
+  // 主进程中监听登录
+  win.webContents.on("did-finish-load", function() {
+    // ...
+    // 这里放注入代码逻辑
+    // ...
+    console.log('did-finish-load')
+  });
+
+  win.webContents.on('did-start-navigation', _ => {
+    console.log('did-start-navigation')
+  });
+  win.webContents.on('will-navigate', _ => {
+    console.log('will-navigate')
+  });
+  win.webContents.on('did-navigate-in-page', _ => {
+    console.log('發送消息了 - did-navigate-in-page')
+    // 获取目标渲染进程的webContents对象
+    // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
+    // const targetWebContents = targetWindow.webContents;
+    // 向目标渲染进程发送消息
+    // console.log(win.webContents)
+    win.webContents.send('reload-page-buttons');
+
+  });
+
+
+
+
+
 
   // 1. 窗口 最小化
   ipcMain.on('window-min', function () { // 收到渲染进程的窗口最小化操作的通知，并调用窗口最小化函数，执行该操作
@@ -498,23 +549,149 @@ function addIpc() {
   // 搜救任务协调
   ipcMain.on('toStudentLogin', (event, url) => {
     const studentLogin = getConfigValueByKey('toStudentLogin')
-    if (win) {
-      win.loadURL(studentLogin);
+    const isNewWindowCreated = getConfigValueByKey('isNewWindowCreated')
+    // console.log(isNewWindowCreated)
+    // console.log(typeof isNewWindowCreated)
+    if (isNewWindowCreated) {
+      let {
+        width,
+        height
+      } = screen.getPrimaryDisplay().workArea;//自定义最大化窗口
+
+      const toStudentLoginWindowConfig = {
+        width: width,
+        height: height
+      }
+
+      toStudentLoginWindow = new AppWindow(toStudentLoginWindowConfig, studentLogin)
+      // 去除windows上的设置窗口的顶部菜单
+      toStudentLoginWindow.removeMenu()
+      toStudentLoginWindow.on('closed', () => {
+        toStudentLoginWindow = null
+      })
+      globalShortcut.register('CommandOrControl+Shift+j', function () {
+        toStudentLoginWindow.webContents.openDevTools()
+      })
+
+      toStudentLoginWindow.webContents.on('did-navigate-in-page', _ => {
+        console.log('發送消息了 - did-navigate-in-page - toStudentLoginWindow - 搜救任务协调')
+        // 获取目标渲染进程的webContents对象
+        // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
+        // const targetWebContents = targetWindow.webContents;
+        // 向目标渲染进程发送消息
+        // console.log(win.webContents)
+        toStudentLoginWindow.webContents.send('reload-page-buttons');
+
+      });
+
+    } else {
+      if (win) {
+        win.loadURL(studentLogin);
+      }
     }
+
+    // if (win) {
+    //   win.loadURL(studentLogin);
+    // }
   })
   // 搜救任务指挥
   ipcMain.on('toStudentOtherLogin', (event, url) => {
     const studentOtherLogin = getConfigValueByKey('toStudentLoginOther')
-    if (win) {
-      win.loadURL(studentOtherLogin);
+    const isNewWindowCreated = getConfigValueByKey('isNewWindowCreated')
+    // console.log(isNewWindowCreated)
+    // console.log(typeof isNewWindowCreated)
+    if (isNewWindowCreated) {
+      let {
+        width,
+        height
+      } = screen.getPrimaryDisplay().workArea;//自定义最大化窗口
+
+      const toStudentOtherLoginWindowConfig = {
+        width: width,
+        height: height
+      }
+
+      toStudentOtherLoginWindow = new AppWindow(toStudentOtherLoginWindowConfig, studentOtherLogin)
+      // 去除windows上的设置窗口的顶部菜单
+      toStudentOtherLoginWindow.removeMenu()
+      toStudentOtherLoginWindow.on('closed', () => {
+        toStudentOtherLoginWindow = null
+      })
+
+      globalShortcut.register('CommandOrControl+Shift+k', function () {
+        toStudentOtherLoginWindow.webContents.openDevTools()
+      })
+
+      toStudentOtherLoginWindow.webContents.on('did-navigate-in-page', _ => {
+        console.log('發送消息了 - did-navigate-in-page - toStudentOtherLoginWindow - 搜救任务指挥')
+        // 获取目标渲染进程的webContents对象
+        // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
+        // const targetWebContents = targetWindow.webContents;
+        // 向目标渲染进程发送消息
+        // console.log(win.webContents)
+        toStudentOtherLoginWindow.webContents.send('reload-page-buttons');
+
+      });
+
+    } else {
+      if (win) {
+        win.loadURL(studentOtherLogin);
+      }
     }
+
+    // if (win) {
+    //   win.loadURL(studentOtherLogin);
+    // }
   })
   // 导调监控
   ipcMain.on('toTeacherLogin', (event, url) => {
     const teacherLogin = getConfigValueByKey('toTeacherLogin')
-    if (win) {
-      win.loadURL(teacherLogin);
+    const isNewWindowCreated = getConfigValueByKey('isNewWindowCreated')
+    // console.log(isNewWindowCreated)
+    // console.log(typeof isNewWindowCreated)
+    if (isNewWindowCreated) {
+      let {
+        width,
+        height
+      } = screen.getPrimaryDisplay().workArea;//自定义最大化窗口
+
+      const toTeacherLoginWindowConfig = {
+        width: width,
+        height: height
+      }
+
+      toTeacherLoginWindow = new AppWindow(toTeacherLoginWindowConfig, teacherLogin)
+      // 去除windows上的设置窗口的顶部菜单
+      toTeacherLoginWindow.removeMenu()
+      toTeacherLoginWindow.on('closed', () => {
+        toTeacherLoginWindow = null
+      })
+
+      globalShortcut.register('CommandOrControl+Shift+;', function () {
+        toTeacherLoginWindow.webContents.openDevTools()
+      })
+
+      toTeacherLoginWindow.webContents.on('did-navigate-in-page', _ => {
+        console.log('發送消息了 - did-navigate-in-page - toTeacherLoginWindow - 导调监控')
+        // 获取目标渲染进程的webContents对象
+        // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
+        // const targetWebContents = targetWindow.webContents;
+        // 向目标渲染进程发送消息
+        // console.log(win.webContents)
+        toTeacherLoginWindow.webContents.send('reload-page-buttons');
+
+      });
+
+    } else {
+      if (win) {
+        win.loadURL(teacherLogin);
+      }
     }
+
+
+    // if (win) {
+    //   win.loadURL(teacherLogin);
+    // }
   })
 
   ipcMain.on('toAdminLogin', (event, url) => {
