@@ -95,3 +95,70 @@ npm run electron:generate-icons
 | 语音识别     | openLocalAppAudio   | 本地应用程序全路径 | E:\\Tencent\\WeChat\\WeChat.exe                |
 
 
+## 两种方案对比
+
+
+### 方案一：自定义事件派发和 preload.js 监听
+
+
+当能修改原始项目源码时可以采用如下方式，在原始项目加载成功后触发一个自定义事件，在 preload.js 中监听自定义事件，进行额外的 dom 处理。
+
+
+1. 由 vue 原始项目内部自己手动触发自定义事件
+
+```
+// 解决方案一：其中的内部事件派发，由 vue 项目内部自己手动触发，此处可以监听到
+
+mounted() {
+  // 向 electron 发送自定义事件
+  var myEvent = new Event('reload-electron-page-buttons')
+  // 触发自定义事件
+  document.dispatchEvent(myEvent)
+  // console.log('触发了自定义事件')
+  // console.log('执行了')
+},
+```
+
+2. electron 中的 preload.js 渲染函数中监听自定义事件，进行处理
+
+```
+// 监听自定义事件 - 显示 electron 两个按钮 - 语音识别 + 内部通信
+document.addEventListener('reload-electron-page-buttons', () => {
+  console.log('Custom event reload-electron-page-buttons triggered!');
+  baseViewFrontendUIAudioBtnShow()
+});
+```
+
+
+### 方案二：主进程 main.js 中监听 路由变化
+
+
+主进程中监听路由发生变化，每次路由变化，都会执行对应的处理函数
+
+```
+  // 解决方案二：主进程中监听路由发生变化
+  // 此种处理方案，每次页面路由发生变化，都会触发下面监听的方法的执行
+  win.webContents.on("did-finish-load", function() {
+    // ...
+    // 这里放注入代码逻辑
+    // ...
+    console.log('did-finish-load')
+  });
+
+  win.webContents.on('did-start-navigation', _ => {
+    console.log('did-start-navigation')
+  });
+  win.webContents.on('will-navigate', _ => {
+    console.log('will-navigate')
+  });
+  win.webContents.on('did-navigate-in-page', _ => {
+    console.log('發送消息了 - did-navigate-in-page')
+    // 获取目标渲染进程的webContents对象
+    // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
+    // const targetWebContents = targetWindow.webContents;
+    // 向目标渲染进程发送消息
+    // console.log(win.webContents)
+    win.webContents.send('reload-page-buttons');
+
+  }); 
+```

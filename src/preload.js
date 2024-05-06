@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }, 2000)
 })
 
+
+// 解决方案一：其中的内部事件派发，由 vue 项目内部自己手动触发，此处可以监听到
+
+// mounted() {
+//   // 向 electron 发送自定义事件
+//   var myEvent = new Event('reload-electron-page-buttons')
+//   // 触发自定义事件
+//   document.dispatchEvent(myEvent)
+//   // console.log('触发了自定义事件')
+//   // console.log('执行了')
+// },
+
 // 监听自定义事件 - 显示 electron 两个按钮 - 语音识别 + 内部通信
 document.addEventListener('reload-electron-page-buttons', () => {
   console.log('Custom event reload-electron-page-buttons triggered!');

@@ -386,7 +386,8 @@ async function createWindow() {
   // createProtocol('app')
 
 
-  // 主进程中监听登录
+  // 解决方案二：主进程中监听路由发生变化
+  // 此种处理方案，每次页面路由发生变化，都会触发下面监听的方法的执行
   // win.webContents.on("did-finish-load", function() {
   //   // ...
   //   // 这里放注入代码逻辑
