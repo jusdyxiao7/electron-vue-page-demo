@@ -1,9 +1,10 @@
 {
-  "isNewWindowCreated": true,
+  "isNewWindowCreated": false,
   "toStudentLogin": "http://117.132.0.103:17743/#/loginStudent",
   "toStudentLoginOther": "http://117.132.0.103:17743/#/loginStudentOther",
   "toTeacherLogin": "http://117.132.0.103:17743/#/loginTeacher",
   "toAdminLogin": "http://117.132.0.103:17743/#/",
+  "toHomePage": "http://117.132.0.103:17743/#/",
   "openChromeWebSite": "https://www.baidu.com",
   "openLocalApp": "notepad.exe",
   "openLocalAppAudio": "E:\\Tencent\\WeChat\\WeChat.exe",

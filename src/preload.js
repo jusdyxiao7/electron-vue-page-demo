@@ -15,7 +15,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }, 2000)
 })
 
-
+// 监听自定义事件 - 显示 electron 两个按钮 - 语音识别 + 内部通信
+document.addEventListener('reload-electron-page-buttons', () => {
+  console.log('Custom event reload-electron-page-buttons triggered!');
+  baseViewFrontendUIAudioBtnShow()
+});
 
 // 监听主进程发送过来的消息
 ipcRenderer.on('reload-page-buttons', () => {

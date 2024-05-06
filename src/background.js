@@ -387,29 +387,29 @@ async function createWindow() {
 
 
   // 主进程中监听登录
-  win.webContents.on("did-finish-load", function() {
-    // ...
-    // 这里放注入代码逻辑
-    // ...
-    console.log('did-finish-load')
-  });
-
-  win.webContents.on('did-start-navigation', _ => {
-    console.log('did-start-navigation')
-  });
-  win.webContents.on('will-navigate', _ => {
-    console.log('will-navigate')
-  });
-  win.webContents.on('did-navigate-in-page', _ => {
-    console.log('發送消息了 - did-navigate-in-page')
-    // 获取目标渲染进程的webContents对象
-    // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
-    // const targetWebContents = targetWindow.webContents;
-    // 向目标渲染进程发送消息
-    // console.log(win.webContents)
-    win.webContents.send('reload-page-buttons');
-
-  });
+  // win.webContents.on("did-finish-load", function() {
+  //   // ...
+  //   // 这里放注入代码逻辑
+  //   // ...
+  //   console.log('did-finish-load')
+  // });
+  //
+  // win.webContents.on('did-start-navigation', _ => {
+  //   console.log('did-start-navigation')
+  // });
+  // win.webContents.on('will-navigate', _ => {
+  //   console.log('will-navigate')
+  // });
+  // win.webContents.on('did-navigate-in-page', _ => {
+  //   console.log('發送消息了 - did-navigate-in-page')
+  //   // 获取目标渲染进程的webContents对象
+  //   // const targetWindow = electron.BrowserWindow.getAllWindows()[0]; // 假设是第一个窗口
+  //   // const targetWebContents = targetWindow.webContents;
+  //   // 向目标渲染进程发送消息
+  //   // console.log(win.webContents)
+  //   win.webContents.send('reload-page-buttons');
+  //
+  // });
 
 
 
@@ -513,6 +513,14 @@ function setTray() {
       }
 
       // win.loadURL('https://www.taobao.com')
+    }
+  }, {
+    label: '工作台', // 跳转到工作台
+    click: () => { //点击事件
+      if (win) {
+        const homePage = getConfigValueByKey('toHomePage')
+        win.loadURL(homePage);
+      }
     }
   }, {
     label: '退出', //菜单名称
